@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 	'Barang Masuk',
 	);
 $this->menu=array(
-	array('label'=>'Tambah Barang Masuk','url'=>array('addbarang')),
+	array('label'=>'Pembelian Baru','url'=>array('addbarang')),
 	array('label'=>'Kelola Supplier','url'=>array('supplier/admin')),
 	);
 
@@ -31,6 +31,7 @@ $this->pageTitle='Barang Masuk';
 
 		'tanggal',
 		'kode_transaksi',
+		'jenis_transaksi',
 		'status',
 
 		array(

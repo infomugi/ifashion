@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'Kelola Barang','url'=>array('admin')),
 	array('label'=>'Tambah Barang','url'=>array('create')),
-	array('label'=>'Detail Barang','url'=>array('view','id'=>$model->kode_barang)),
+	array('label'=>'Detail Barang','url'=>array('view','id'=>$model->id_barang)),
 	);
 	?>
 

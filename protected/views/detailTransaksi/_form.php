@@ -64,7 +64,7 @@
 					<p class="alert alert-primary text-right"><i class="text-right" id="NIK"><a href="#" onclick="$(&quot;#mydialog&quot;).dialog(&quot;open&quot;);" return="" false;=""><code>Cari Barang</code></a></i></p>
 				</div>
 				<div class="span3">
-					<?php echo CHtml::submitButton($model->isNewRecord ? 'Tambahkan' : 'Edit', array('class' => 'btn btn-primary btn-lg pull-right')); ?>
+					<?php echo CHtml::submitButton($model->isNewRecord ? 'Tambahkan' : 'Edit', array('class' => 'btn btn-warning btn-lg pull-right')); ?>
 				</div>
 			</div>
 
@@ -160,6 +160,7 @@
 					$(\"#DetailTransaksi_kode_barangs \").val(\"". $data->kode_barang."\");
 					$(\"#DetailTransaksi_nama_barang \").val(\"". $data->nama_barang."\");
 					$(\"#DetailTransaksi_stok \").val(\"". $data->stok."\");
+					$(\"#DetailTransaksi_jumlah \").focus();
 					"))',
 					),
 				),
@@ -169,3 +170,20 @@
 				<?php $this->endWidget('zii.widgets.jui.CJuiDialog'); ?>
 
 			</fieldset>
+
+
+
+			<style type="text/css">
+				form div {
+					display: block;
+					margin-bottom: 10px;
+				}
+				.navbar-inverse .navbar-inner, div.portlet-decoration{
+					background-color: #ff7518;
+				}
+
+				a {
+					color: #ff7518; 
+				}
+
+			</style>

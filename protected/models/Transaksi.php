@@ -41,7 +41,9 @@ class Transaksi extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tanggal, kode_transaksi, jenis_transaksi', 'required'),
+			array('tanggal, kode_transaksi, jenis_transaksi,pelanggan_id', 'required','on'=>'penjualan'),
+			array('tanggal, kode_transaksi, jenis_transaksi,supplier_id', 'required','on'=>'pembelian'),
+			array('tanggal, kode_transaksi, jenis_transaksi,pelanggan_id, supplier_id', 'required','on'=>'retur'),
 			array('petugas_id, supplier_id, pelanggan_id', 'numerical', 'integerOnly'=>true),
 			array('kode_transaksi, jenis_transaksi, petugas_by, status', 'length', 'max'=>25),
 			// The following rule is used by search().
@@ -107,7 +109,7 @@ class Transaksi extends CActiveRecord
 	}
 
 	public function generateTransactionCodeOut(){
-		$_i = "M/".date('Ym')."/";
+		$_i = "P/".date('Ym')."/";
 		$_left = $_i;
 		$_first = "0000";
 		$_len = strlen($_left);
@@ -133,7 +135,7 @@ class Transaksi extends CActiveRecord
 
 
 	public function generateTransactionCodeAdd(){
-		$_i = "P/".date('Ym')."/";
+		$_i = "M/".date('Ym')."/";
 		$_left = $_i;
 		$_first = "0000";
 		$_len = strlen($_left);
@@ -193,4 +195,41 @@ class Transaksi extends CActiveRecord
 		$this->tanggal = date('Y-m-d', strtotime($this->tanggal));
 		return TRUE;
 	}    		
+
+	public static function grandTotal($data){
+		$sql = "
+		SELECT sum(b.harga * d.jumlah) as total 
+		FROM detail_transaksi as d 
+		LEFT JOIN barang as b ON
+		d.kode_barang=b.id_barang
+		WHERE d.transaksi_id=".$data;
+		$command = YII::app()->db->createCommand($sql);
+
+		if($command->queryScalar()!=0){
+			return $command->queryScalar();
+		}else{
+			return "0";
+		}
+	}
+
+	public static function grandTotalDiscount($data){
+		$sql = "
+		SELECT sum((b.harga - 1000) * d.jumlah) as total 
+		FROM detail_transaksi as d 
+		LEFT JOIN barang as b ON
+		d.kode_barang=b.id_barang
+		WHERE d.transaksi_id=".$data;
+		$command = YII::app()->db->createCommand($sql);
+
+		if($command->queryScalar()!=0){
+			return $command->queryScalar();
+		}else{
+			return "0";
+		}
+	}	
+
+	public function rupiah($data){
+		return "Rp. " . Yii::app()->numberFormatter->format("###,###,###",$data);
+	}
+
 }

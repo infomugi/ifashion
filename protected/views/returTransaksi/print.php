@@ -7,7 +7,7 @@ $this->menu=array(
 	);
 	?>
 
-	<h2 class="header">Laporan Retur <b>#<?php echo $model->id_retur_transaksi; ?></b><span class="header-line"></span></h2>
+	<h2 class="header">Report Barang Transaksi <b>#<?php echo $model->id_retur_transaksi; ?></b><span class="header-line"></span></h2>
 
 	<?php $this->widget('zii.widgets.CDetailView', array(
 		'data'=>$model,
@@ -33,7 +33,7 @@ $this->menu=array(
 			),
 			)); ?>
 
-			<h2 class="header">Barang <b>#<?php echo $model->Barang->kode_barang; ?></b><span class="header-line"></span></h2>
+			<h2 class="header">Data Barang <b>#<?php echo $model->kode_barang; ?></b><span class="header-line"></span></h2>
 			<?php $this->widget('zii.widgets.CDetailView', array(
 				'data'=>$model,
 				'htmlOptions'=>array("class"=>"table "),
@@ -53,11 +53,6 @@ $this->menu=array(
 					array(
 						'label'=>'Stok',
 						'value'=>$model->Barang->stok
-						),
-
-					array(
-						'label'=>'Stok Retur',
-						'value'=>$model->Barang->stok_retur
 						),
 
 
@@ -82,16 +77,9 @@ $this->menu=array(
 					<BR>
 
 						<?php }else{ ?>
-
-							<H1>
-								<div class="alert alert-warning">Laporan : <?php echo $model->type; ?> Terverifikasi</div>
-							</H1>
-
-
-							<?php echo CHtml::link('Kembalikan ke Supplier',
-								array('supplier', 'id'=>$model->id_retur_transaksi),
-								array('class' => 'btn btn-success pull-right btn-flat','title'=>'Verifikasi Retur'));
-							?>
+							
+							<div class="alert alert-warning">Laporan : <?php echo $model->type; ?> Terverifikasi</div>
+							
 
 							<BR>
 								<BR>

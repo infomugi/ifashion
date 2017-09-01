@@ -5,4 +5,4 @@ $this->pageTitle='Edit Petugas';
 ?>
 
 <h2 class="header">Edit Petugas #<?php echo $model->kode_petugas; ?></b><span class="header-line"></span></h2>
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form_update', array('model'=>$model)); ?>

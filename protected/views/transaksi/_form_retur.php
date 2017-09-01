@@ -117,7 +117,7 @@
 
 							<div class="row-fluid">
 								<div class="span12">
-									<?php echo CHtml::submitButton($model->isNewRecord ? 'Simpan' : 'Edit', array('class' => 'btn btn-warning btn-lg pull-right')); ?>
+									<?php echo CHtml::submitButton($model->isNewRecord ? 'Simpan' : 'Edit', array('class' => 'btn btn-danger btn-lg pull-right')); ?>
 								</div>
 							</div>
 
@@ -130,5 +130,13 @@
 						form div {
 							display: block;
 							margin-bottom: 10px;
+						}
+
+						.navbar-inverse .navbar-inner, div.portlet-decoration{
+							background-color: #ff0039;
+						}
+
+						a {
+							color: #ff0039; 
 						}
 					</style>

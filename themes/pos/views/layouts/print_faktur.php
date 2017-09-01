@@ -8,12 +8,12 @@
 </head>
 <body>
 	<STYLE>
-		#cetak{width:800px;padding: 15px;}
+		#cetak{width:350px;padding: 5px;}
 	</STYLE>
 
 	<div id="cetak">
 		<header>
-			<H1><center><?php echo YII::app()->name; ?></center></H1>
+			<h3><center><?php echo YII::app()->name; ?></center></h3>
 			<p><center><b>Jl. Raya Soekarno Hatta No.456 Bandung</b></center></p>
 			<HR>
 			</header>

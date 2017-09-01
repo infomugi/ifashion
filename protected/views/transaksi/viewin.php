@@ -22,123 +22,175 @@ $this->menu=array(
 	);
 
 $this->pageTitle='Detail Transaksi';
-?>
+if($model->status=="Verifikasi"):
+	?>
 
 <h3>Petugas #<?php echo $model->petugas_id; ?>
 	
 
-	<?php echo CHtml::link('Verifikasi Barang Masuk', 
-		array('verifikasi', 'id'=>$model->id_transaksi,
-			), array('class' => 'btn btn-warning pull-right', 'title'=>'Verifikasi Barang Masuk'));
-			?>
+	<?php 
+	if($model->status!="Verifikasi"):
+		echo CHtml::link('Verifikasi Barang Masuk', 
+			array('verifikasi', 'id'=>$model->id_transaksi,
+				), array('class' => 'btn btn-warning pull-right', 'title'=>'Verifikasi Barang Masuk'));
+	endif;
+	?>
 
-		</h3>
+</h3>
 
+<?php $this->widget('zii.widgets.CDetailView', array(
+	'data'=>$model,
+	'htmlOptions'=>array("class"=>"table"),
+	'attributes'=>array(
+		'petugas_id',
+		'petugas_by',
+		),
+	)); 
+endif;
+?>								
+
+<div class="row-fluid">
+	<div class="span6">
+		<h3>Kode #<?php echo $model->kode_transaksi; ?></h3>
 		<?php $this->widget('zii.widgets.CDetailView', array(
 			'data'=>$model,
 			'htmlOptions'=>array("class"=>"table"),
 			'attributes'=>array(
-				'petugas_id',
-				'petugas_by',
+				'id_transaksi',
+				'tanggal',
+				'jenis_transaksi',
+				'status',
 				),
-				)); ?>								
+				)); ?>
+			</div>
 
-				<div class="row-fluid">
-					<div class="span6">
-						<h3>Kode #<?php echo $model->kode_transaksi; ?></h3>
-						<?php $this->widget('zii.widgets.CDetailView', array(
-							'data'=>$model,
-							'htmlOptions'=>array("class"=>"table"),
-							'attributes'=>array(
-								'id_transaksi',
-								'tanggal',
-								'jenis_transaksi',
-								'status',
+			<div class="span6">
+
+				<h3>Supplier
+
+					<?php 
+					if($model->status!="Verifikasi"):
+						echo CHtml::link('Edit Supplier',
+							array('supplier/update', 'id'=>$model->pelanggan_id),
+							array('class' => 'btn btn-success pull-right','title'=>'Edit Supplier'));
+					endif;
+					?>
+
+				</h3>
+
+
+
+				<?php $this->widget('zii.widgets.CDetailView', array(
+					'data'=>$model,
+					'htmlOptions'=>array("class"=>"table"),
+					'attributes'=>array(
+						array('label'=>'Nama Pemasok','value'=>$model->Supplier->nama),
+						array('label'=>'Alamat','value'=>$model->Supplier->alamat),
+						array('label'=>'Kontak','value'=>$model->Supplier->kontak),
+						array('label'=>'email','value'=>$model->Supplier->email),
+						),
+						)); ?>
+					</div>
+				</div>
+
+				<?php
+				if($model->status!="Verifikasi"):
+					echo CHtml::link('Tambah Barang',
+						array('detailtransaksi/addin', 'id'=>$model->id_transaksi),
+						array('class' => 'btn btn-success pull-right','title'=>'Cari Barang'));
+				endif;
+				?>
+
+				<h3>Detail Pembelian</h3>
+				<?php $this->widget('zii.widgets.grid.CGridView', array(
+					'id'=>'detail-transaksi-grid',
+					'dataProvider'=>$detailtransaksi,
+					'itemsCssClass' => 'table-responsive table table-striped table-hover table-vcenter',
+					'columns'=>array(
+
+						array(
+							'header'=>'No',
+							'value'=>'$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+							'htmlOptions'=>array('width'=>'10px', 
+								'style' => 'text-align: center;')),
+
+											// 'tanggal',
+
+						array(
+							'header'=>'Nama Barang',
+							'value'=>'$data->Barang->kode_barang',
+							),
+
+						array(
+							'header'=>'Nama Barang',
+							'value'=>'$data->Barang->nama_barang',
+							),
+
+
+						array(
+							'header'=>'Stock',
+							'value'=>'$data->Barang->stok',
+							),
+
+						array(
+							'header'=>'Harga',
+							'value'=>'Transaksi::model()->rupiah($data->Barang->harga)',
+							),
+
+
+						array(
+							'header'=>'QTY',
+							'value'=>'$data->jumlah',
+							),
+
+						array(
+							'header'=>'Subtotal',
+							'value'=>'Transaksi::model()->rupiah($data->Barang->harga * $data->jumlah)',
+							),
+
+						array(
+							'class'=>'CButtonColumn',
+							'template'=>'{view}{update}{delete}',
+							'buttons'=>array(
+								'view'=>
+								array(
+									'visible'=>'$data->Transaksi->status=="Verifikasi"',
+									'url'=>'Yii::app()->createUrl("detailtransaksi/view", array("id"=>$data->id_detail_transaksi))',
+									),
+								'update'=>
+								array(
+									'visible'=>'$data->Transaksi->status!="Verifikasi"',
+									'url'=>'Yii::app()->createUrl("detailtransaksi/update", array("id"=>$data->id_detail_transaksi))',
+									),
+								'delete'=>
+								array(
+									'visible'=>'$data->Transaksi->status!="Verifikasi"',
+									'url'=>'Yii::app()->createUrl("detailtransaksi/delete", array("id"=>$data->id_detail_transaksi))',
+									),
 								),
-								)); ?>
-							</div>
+							),
+						),
+						)); ?>
 
-							<div class="span6">
+				<?php 
+				if($model->status!="Verifikasi"):
+					echo CHtml::link('Verifikasi Barang Masuk', 
+						array('verifikasi', 'id'=>$model->id_transaksi,
+							), array('class' => 'btn btn-warning pull-right', 'title'=>'Verifikasi Barang Masuk'));
+				endif;
+				?>
 
-								<h3>Supplier
+				<BR>
+					<BR>
 
-									<?php echo CHtml::link('Edit Supplier',
-										array('supplier/update', 'id'=>$model->pelanggan_id),
-										array('class' => 'btn btn-success pull-right','title'=>'Edit Supplier'));
-										?>
+						<STYLE>
+							th{width:150px;}
+							.navbar-inverse .navbar-inner, div.portlet-decoration{
+								background-color: #9954bb;
+							}
 
-									</h3>
+							a {
+								color: #9954bb; 
+							}
 
-
-
-									<?php $this->widget('zii.widgets.CDetailView', array(
-										'data'=>$model,
-										'htmlOptions'=>array("class"=>"table"),
-										'attributes'=>array(
-											array('label'=>'Nama Pemasok','value'=>$model->Supplier->nama),
-											array('label'=>'Alamat','value'=>$model->Supplier->alamat),
-											array('label'=>'Kontak','value'=>$model->Supplier->kontak),
-											array('label'=>'email','value'=>$model->Supplier->email),
-											),
-											)); ?>
-										</div>
-									</div>
-
-									<?php echo CHtml::link('Tambah Barang',
-										array('detailtransaksi/addin', 'id'=>$model->id_transaksi),
-										array('class' => 'btn btn-success pull-right','title'=>'Cari Barang'));
-										?>
-
-										<h3>Detail Pembelian</h3>
-										<?php $this->widget('zii.widgets.grid.CGridView', array(
-											'id'=>'detail-transaksi-grid',
-											'dataProvider'=>$detailtransaksi,
-											'itemsCssClass' => 'table-responsive table table-striped table-hover table-vcenter',
-											'columns'=>array(
-
-												array(
-													'header'=>'No',
-													'value'=>'$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
-													'htmlOptions'=>array('width'=>'10px', 
-														'style' => 'text-align: center;')),
-
-												'tanggal',
-
-												array(
-													'header'=>'Nama Barang',
-													'value'=>'$data->Barang->kode_barang',
-													),
-
-												array(
-													'header'=>'Nama Barang',
-													'value'=>'$data->Barang->nama_barang',
-													),
-
-												array(
-													'header'=>'Sisa Stok',
-													'value'=>'$data->Barang->stok',
-													),
-
-												'jumlah',
-
-												array(
-													'class'=>'CButtonColumn',
-													'template'=>'{update}{delete}',
-													'buttons'=>array(
-														'update'=>
-														array(
-															'url'=>'Yii::app()->createUrl("detailtransaksi/update", array("id"=>$data->id_detail_transaksi))',
-															),
-														'delete'=>
-														array(
-															'url'=>'Yii::app()->createUrl("detailtransaksi/delete", array("id"=>$data->id_detail_transaksi))',
-															),
-														),
-													),
-												),
-												)); ?>
-
-										<STYLE>
-											th{width:150px;}
-										</STYLE>
-
+						</STYLE>

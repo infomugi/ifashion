@@ -16,7 +16,7 @@ class SupplierController extends Controller
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
-		);
+			);
 	}
 
 	/**
@@ -27,18 +27,20 @@ class SupplierController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('view'),
+			array('allow',
+				'actions'=>array('create','update','view','delete','admin','index'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','index'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
+				'expression'=>'Yii::app()->user->record->level==1',
+				),
+			array('allow',
+				'actions'=>array('create','update','view','delete','admin','index'),
+				'users'=>array('@'),
+				'expression'=>'Yii::app()->user->record->level==3',
+				),			
+			array('deny',
 				'users'=>array('*'),
-			),
-		);
+				),
+			);
 	}
 
 	/**
@@ -49,7 +51,7 @@ class SupplierController extends Controller
 	{
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
-		));
+			));
 	}
 
 	/**
@@ -72,7 +74,7 @@ class SupplierController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
-		));
+			));
 	}
 
 	/**
@@ -96,7 +98,7 @@ class SupplierController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
-		));
+			));
 	}
 
 	/**
@@ -121,7 +123,7 @@ class SupplierController extends Controller
 		$dataProvider=new CActiveDataProvider('Supplier');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+			));
 	}
 
 	/**
@@ -136,7 +138,7 @@ class SupplierController extends Controller
 
 		$this->render('admin',array(
 			'model'=>$model,
-		));
+			));
 	}
 
 	/**

@@ -9,6 +9,6 @@ $this->menu=array(
 	);
 	?>
 
-	<h3 class="alert alert-info">Pencarian Barang</h3>
+	<h3 class="alert alert-warning">Pencarian Barang</h3>
 
 	<?php echo $this->renderPartial('_form', array('model'=>$model,'model2'=>$model2)); ?>

@@ -39,7 +39,7 @@ class Barang extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('kode_barang, nama_barang, kategori, stok, stok_minimum, harga_beli, harga, warna, ukuran, status', 'required'),
+			array('kode_barang, nama_barang, kategori, stok, stok_minimum, harga_beli, harga, warna, ukuran, status, gambar', 'required'),
 			array('kategori, stok, stok_minimum, warna, ukuran, status', 'numerical', 'integerOnly'=>true),
 			array('harga_beli, harga', 'numerical'),
 			array('kode_barang', 'length', 'max'=>10),
@@ -132,5 +132,13 @@ class Barang extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function check($stock,$minimum){
+		if($stock <= $minimum){
+			return "Stok Hampir Habis, Harap Segera dilakukan Pengadaan";
+		}else{
+			return "Stok Stabil";
+		}
 	}
 }

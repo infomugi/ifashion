@@ -28,15 +28,15 @@ $this->breadcrumbs=array(
 
              <BR>
                <?php echo $form->textField($model,'username', array('class' => 'form-control text-blue', 'placeholder'=>'Username')); ?>
-               <?php echo $form->error($model,'username', array('class'=>'alert alert-warning')); ?>
+               <?php echo $form->error($model,'username', array('class'=>'alert alert-danger')); ?>
                <BR>
                  <?php echo $form->passwordField($model,'password', array('class' => 'form-control text-blue','placeholder'=>'Password')); ?>
-                 <?php echo $form->error($model,'password', array('class'=>'alert alert-warning')); ?>
+                 <?php echo $form->error($model,'password', array('class'=>'alert alert-danger')); ?>
 
                </div>
 
 
-               <?php echo CHtml::submitButton('Login', array('class' => 'btn btn-lg btn-warning btn-block')); ?>
+               <?php echo CHtml::submitButton('Login', array('class' => 'btn btn-lg btn-info btn-block')); ?>
                <?php $this->endWidget(); ?>
 
              </div>  

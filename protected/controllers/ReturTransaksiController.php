@@ -17,7 +17,7 @@ class ReturTransaksiController extends Controller
 			'accessControl', // perform access control for CRUD operations
 			//'postOnly + delete', // we only allow deletion via POST request
 			// 'rights',
-		);
+			);
 	}
 
 	/**
@@ -29,12 +29,12 @@ class ReturTransaksiController extends Controller
 	{
 		return array(
 			array('allow',
-				'actions'=>array('create','update','view','delete','admin','index','addin','addout','verifikasi','printin'),
+				'actions'=>array('create','update','view','delete','admin','index','addin','addout','verifikasi','printin','supplier'),
 				'users'=>array('@'),
 				'expression'=>'Yii::app()->user->record->level==1',
 				),
 			array('allow',
-				'actions'=>array('view','index'),
+				'actions'=>array('create','update','view','delete','admin','index','addin','addout','verifikasi','printin','supplier'),
 				'users'=>array('@'),
 				'expression'=>'Yii::app()->user->record->level==3',
 				),			
@@ -52,16 +52,16 @@ class ReturTransaksiController extends Controller
 	{
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
-		));
+			));
 	}
 
 
 	public function actionPrintin($id)
 	{
 		$this->layout = "print";
-		$this->render('view',array(
+		$this->render('print',array(
 			'model'=>$this->loadModel($id),
-		));
+			));
 	}
 
 	/**
@@ -94,7 +94,7 @@ class ReturTransaksiController extends Controller
 			}else{
 				if($model->save());
 				$this->redirect(array('detailtransaksi/view','id'=>$dtid));
-		}
+			}
 		}
 
 		$this->render('create',array(
@@ -104,7 +104,7 @@ class ReturTransaksiController extends Controller
 			'dtid'=>$dtid,
 			'ktrs'=>$ktrs,
 			'tgl'=>$tgl
-		));
+			));
 	}
 
 	/**
@@ -128,7 +128,7 @@ class ReturTransaksiController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
-		));
+			));
 	}
 
 	public function actionVerifikasi($id)
@@ -136,14 +136,22 @@ class ReturTransaksiController extends Controller
 		$model=$this->loadModel($id);
 		$model->status = 1;
 		$model->save();
-		mysql_connect("localhost","root","");
-		mysql_select_db("eternity");
-		$validasistok=mysql_query("select stok from barang where kode_barang='$model->kode_barang'");
-		$getstok=mysql_fetch_object($validasistok);
-		$proseskurang=$getstok->stok - $model->jumlah;
-		mysql_query("UPDATE `barang` SET `stok` = '$proseskurang' WHERE `kode_barang` = '$model->kode_barang'");
+		$retur=$this->loadBarang($model->kode_barang);
+		$retur->stok_retur += $model->jumlah;
+		$retur->update();
 		$this->redirect(array('view','id'=>$model->id_retur_transaksi));
 	}
+
+	public function actionSupplier($id)
+	{
+		$model=$this->loadModel($id);
+		$model->status = 2;
+		$model->save();
+		$retur=$this->loadBarang($model->kode_barang);
+		$retur->stok_retur -= $model->jumlah;
+		$retur->update();
+		$this->redirect(array('view','id'=>$model->id_retur_transaksi));
+	}	
 
 
 	/**
@@ -168,7 +176,7 @@ class ReturTransaksiController extends Controller
 		$dataProvider=new CActiveDataProvider('ReturTransaksi');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+			));
 	}
 
 	/**
@@ -183,7 +191,7 @@ class ReturTransaksiController extends Controller
 
 		$this->render('admin',array(
 			'model'=>$model,
-		));
+			));
 	}
 
 	/**
@@ -200,6 +208,14 @@ class ReturTransaksiController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
+
+	public function loadBarang($id)
+	{
+		$model=Barang::model()->findByPk($id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}	
 
 	/**
 	 * Performs the AJAX validation.

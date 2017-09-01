@@ -20,28 +20,28 @@
 
 			<?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-warning')); ?>
 
-				<div class="form-group">
-					<div class="span4">
-						<?php echo $form->labelEx($model,'type'); ?>
-					</div>   
+			<div class="form-group">
+				<div class="span4">
+					<?php echo $form->labelEx($model,'type'); ?>
+				</div>   
 
-					<div class="span8">
-						<?php echo $form->error($model,'type'); ?>
-						<?php echo $form->dropDownlist($model,'type',array(''=>'- Pilih Laporan -','Barang Hilang'=>'Barang Hilang','Barang Cacat'=>'Barang Cacat','Barang Rusak'=>'Barang Rusak')); ?>
-					</div>
-				</div>  
+				<div class="span8">
+					<?php echo $form->error($model,'type'); ?>
+					<?php echo $form->dropDownlist($model,'type',array(''=>'- Pilih Laporan -','Barang Hilang'=>'Barang Hilang','Barang Cacat'=>'Barang Cacat','Barang Rusak'=>'Barang Rusak')); ?>
+				</div>
+			</div>  
 
 
-				<div class="form-group">
-					<div class="span4">
-						<?php echo $form->labelEx($model,'jumlah'); ?>
-					</div>   
+			<div class="form-group">
+				<div class="span4">
+					<?php echo $form->labelEx($model,'jumlah'); ?>
+				</div>   
 
-					<div class="span8">
-						<?php echo $form->error($model,'jumlah'); ?>
-						<?php echo $form->textField($model,'jumlah'); ?>
-					</div>
-				</div>  
+				<div class="span8">
+					<?php echo $form->error($model,'jumlah'); ?>
+					<?php echo $form->textField($model,'jumlah'); ?>
+				</div>
+			</div>  
 
 
 			<div class="form-group">
@@ -81,16 +81,21 @@
 
 
 
-				<div class="form-group">
-					<div class="span12 form-actions">  
-						<?php $this->widget('bootstrap.widgets.TbButton', array(
-							'buttonType'=>'submit',
-							'type'=>'primary',
-							'label'=>$model->isNewRecord ? 'Simpan' : 'Ubah',
-							)); ?>
-						</div>
+
+				<div class="row-fluid">
+					<div class="span12">
+						<?php echo CHtml::submitButton($model->isNewRecord ? 'Simpan' : 'Edit', array('class' => 'btn btn-danger btn-lg pull-right')); ?>
 					</div>
+				</div>
 
-					<?php $this->endWidget(); ?>
+				<?php $this->endWidget(); ?>
 
-</div></div><!-- form -->
+			</div></div><!-- form -->
+
+
+			<style type="text/css">
+				form div {
+					display: block;
+					margin-bottom: 10px;
+				}
+			</style>

@@ -39,7 +39,13 @@ class TransaksiController extends Controller
 				'expression'=>'Yii::app()->user->record->level==1',
 				),
 			array('allow',
-				'actions'=>array('view','index','laporan'),
+				'actions'=>array(
+					'create','update','view','admin',
+					'index','in','out','addbarang','outbarang',
+					'viewin','viewout','printin','printout',
+					'verifikasi','laporan','returbarang','viewretur',
+					'printretur','retur',
+					),
 				'users'=>array('@'),
 				'expression'=>'Yii::app()->user->record->level==3',
 				),			
@@ -70,7 +76,7 @@ class TransaksiController extends Controller
 
 	public function actionPrintout($id)
 	{
-		$this->layout = "print";
+		$this->layout = "print_faktur";
 		$this->render('printout',array(
 			'model'=>$this->loadModel($id),
 			));
@@ -107,6 +113,7 @@ class TransaksiController extends Controller
 	public function actionAddBarang()
 	{
 		$model=new Transaksi;
+		$model->setScenario('pembelian');
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -132,6 +139,7 @@ class TransaksiController extends Controller
 	public function actionReturBarang()
 	{
 		$model=new Transaksi;
+		$model->setScenario('retur');
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -157,6 +165,7 @@ class TransaksiController extends Controller
 	public function actionOutBarang()
 	{
 		$model=new Transaksi;
+		$model->setScenario('penjualan');
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -322,11 +331,18 @@ class TransaksiController extends Controller
 		$model=$this->loadModel($id);
 		$model->petugas_id = YII::app()->user->id;
 		$model->status = "Verifikasi";
+		if($model->pelanggan_id==1){
+			$model->total = Transaksi::model()->grandTotal($model->id_transaksi);
+		}else{
+			$model->total = Transaksi::model()->grandTotalDiscount($model->id_transaksi);
+		}
 		$model->save();
 		if($model->jenis_transaksi=="Barang Masuk"){
 			$this->redirect(array('viewin','id'=>$model->id_transaksi));
-		}else{
+		}else if($model->jenis_transaksi=="Barang Keluar"){
 			$this->redirect(array('viewout','id'=>$model->id_transaksi));
+		}else{
+			$this->redirect(array('viewretur','id'=>$model->id_transaksi));
 		}
 	}	
 

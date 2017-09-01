@@ -27,20 +27,21 @@ class PetugasController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('view'),
+			array('allow',
+				'actions'=>array('create','update','view','delete','admin','index'),
 				'users'=>array('@'),
+				'expression'=>'Yii::app()->user->record->level==1',
 				),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','index'),
-				'users'=>array('admin'),
-				),
-			array('deny',  // deny all users
+			array('allow',
+				'actions'=>array('update','view'),
+				'users'=>array('@'),
+				'expression'=>'Yii::app()->user->record->level==3',
+				),			
+			array('deny',
 				'users'=>array('*'),
 				),
 			);
 	}
-
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed

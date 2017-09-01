@@ -29,6 +29,7 @@ $this->pageTitle='Barang Retur';
 
 		'tanggal',
 		'kode_transaksi',
+		'jenis_transaksi',
 		'status',
 
 		array(

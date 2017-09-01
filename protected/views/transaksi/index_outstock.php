@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 	'Penjualan',
 	);
 $this->menu=array(
-	array('label'=>'Tambah Penjualan','url'=>array('outbarang')),
+	array('label'=>'Penjualan Baru','url'=>array('outbarang')),
 	array('label'=>'Kelola Pelanggan','url'=>array('pelanggan/admin')),
 	);
 $this->pageTitle='Penjualan';
@@ -31,8 +31,9 @@ $this->pageTitle='Penjualan';
 
 		'tanggal',
 		'kode_transaksi',
+		'jenis_transaksi',
 		'status',
-
+		array('name'=>'total','value'=>'Transaksi::model()->rupiah($data->total)'),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 			'template'=>'{view}{delete}',

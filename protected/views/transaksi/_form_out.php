@@ -104,7 +104,7 @@
 
 						<div class="row-fluid">
 							<div class="span12">
-								<?php echo CHtml::submitButton($model->isNewRecord ? 'Simpan' : 'Edit', array('class' => 'btn btn-primary btn-lg pull-right')); ?>
+								<?php echo CHtml::submitButton($model->isNewRecord ? 'Simpan' : 'Edit', array('class' => 'btn btn-success btn-lg pull-right')); ?>
 							</div>
 						</div>
 
@@ -119,4 +119,12 @@
 						display: block;
 						margin-bottom: 10px;
 					}
+					.navbar-inverse .navbar-inner, div.portlet-decoration{
+						background-color: #41bb19;
+					}
+
+					a {
+						color: #41bb19; 
+					}
+
 				</style>

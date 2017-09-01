@@ -4,9 +4,12 @@
 /* @var $form CActiveForm */
 ?>
 
+<div class="row-fluid">
 
-<div class="form-normal form-horizontal clearfix">
-	<div class="span9 span10"> 
+	<div class="span1">
+	</div>
+
+	<div class="span10" id="form">
 
 		<?php $form=$this->beginWidget('CActiveForm', array(
 			'id'=>'petugas-form',
@@ -16,76 +19,65 @@
 				'validateOnSubmit' => true,
 				),
 			'errorMessageCssClass' => 'label label-danger',
-			'htmlOptions' => array('class' => 'form-horizontal', 'role' => 'form')
+			'htmlOptions' => array('enctype' => 'multipart/form-data','autocomplete'=>'off'),		
 			)); ?>
 
 			<?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-warning')); ?>
 
+
+			<div class="row-fluid">
+				<div class="span4">
+					<?php echo $form->labelEx($model,'username'); ?>
+				</div>   
+
+				<div class="span8">
+					<?php echo $form->textField($model,'username',array('size'=>50,'maxlength'=>50)); ?>
+				</div>
+			</div>  
+
 			
-				<div class="form-group">
-	
-						<div class="span4 control-label">
-							<?php echo $form->labelEx($model,'kode_petugas'); ?>
-						</div>   
+			<div class="row-fluid">
+				<div class="span4">
+					<?php echo $form->labelEx($model,'password'); ?>
+				</div>   
 
-						<div class="span8">
-							<?php echo $form->error($model,'kode_petugas'); ?>
-							<?php echo $form->textField($model,'kode_petugas',array('class'=>'form-control','value'=>date('sm'),'readonly'=>'true')); ?>
-						</div>
-		
+				<div class="span8">
+					<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>100)); ?>
+				</div>
+			</div>  
+
+			
+			<div class="row-fluid">
+				<div class="span4">
+					<?php echo $form->labelEx($model,'email'); ?>
+				</div>   
+
+				<div class="span8">
+					<?php echo $form->textField($model,'email',array('size'=>50,'maxlength'=>50)); ?>
+				</div>
+			</div>  
+
+			<?php if(Yii::app()->user->record->level!=3): ?>
+				<div class="row-fluid">
+					<div class="span4">
+						<?php echo $form->labelEx($model,'level'); ?>
+					</div>   
+
+					<div class="span8">
+						<?php echo $form->textField($model,'level',array('size'=>10,'maxlength'=>10)); ?>
+					</div>
 				</div>  
+			<?php endif; ?>
 
-				
-				<div class="form-group">
-	
-						<div class="span4 control-label">
-							<?php echo $form->labelEx($model,'username'); ?>
-						</div>   
-
-						<div class="span8">
-							<?php echo $form->error($model,'username'); ?>
-							<?php echo $form->textField($model,'username',array('class'=>'form-control')); ?>
-						</div>
-		
-				</div>  
-
-				
-				<div class="form-group">
-	
-						<div class="span4 control-label">
-							<?php echo $form->labelEx($model,'password'); ?>
-						</div>   
-
-						<div class="span8">
-							<?php echo $form->error($model,'password'); ?>
-							<?php echo $form->passwordField($model,'password',array('class'=>'form-control')); ?>
-						</div>
-		
-				</div>  
-
-				
-				<div class="form-group">
-	
-						<div class="span4 control-label">
-							<?php echo $form->labelEx($model,'email'); ?>
-						</div>   
-
-						<div class="span8">
-							<?php echo $form->error($model,'email'); ?>
-							<?php echo $form->textField($model,'email',array('class'=>'form-control')); ?>
-						</div>
-		
-				</div>  
-
-				
-
-							<div class="form-group">
-				<div class="col-md-12">  
-				</br></br>
-				<?php echo CHtml::submitButton($model->isNewRecord ? 'Submit' : 'Edit', array('class' => 'btn btn-info btn-flat pull-right')); ?>
+			<div class="row-fluid">
+				<?php echo CHtml::submitButton($model->isNewRecord ? 'Simpan' : 'Edit', array('class' => 'btn btn-primary pull-right')); ?>
 			</div>
+
+			<?php $this->endWidget(); ?>
+
 		</div>
 
-		<?php $this->endWidget(); ?>
+		<div class="span1">
+		</div>
 
-</div></div><!-- form -->
+</div><!-- form -->

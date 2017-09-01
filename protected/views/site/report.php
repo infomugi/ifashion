@@ -109,7 +109,7 @@ $this->breadcrumbs=array(
 								<div class="span4">
 								</div>
 								<div class="span8">
-									<input class="btn btn-primary btn-large btn-flat pull-right" type="submit" value="Tampilkan" >
+									<input class="btn btn-inverse btn-large btn-flat pull-right" type="submit" value="Tampilkan" >
 								</div>   
 							</div>
 
@@ -120,4 +120,14 @@ $this->breadcrumbs=array(
 					</div>
 				</div>
 
-				
+				<style type="text/css">
+					
+					.navbar-inverse .navbar-inner, div.portlet-decoration{
+						background-color: #000;
+					}
+
+					a {
+						color: #000; 
+					}
+
+				</style>

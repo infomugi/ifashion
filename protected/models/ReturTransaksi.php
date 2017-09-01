@@ -48,7 +48,7 @@ class ReturTransaksi extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id_retur_transaksi, tanggal, kode_barang, transaksi_id, detail_transaksi_id, type, jumlah, status, petugas_id', 'safe', 'on'=>'search'),
-		);
+			);
 	}
 
 	/**
@@ -64,7 +64,7 @@ class ReturTransaksi extends CActiveRecord
 			'Barang'=>array(self::BELONGS_TO,'Barang','kode_barang'),
 			'Petugas'=>array(self::BELONGS_TO,'Petugas','petugas_id'),
 
-		);
+			);
 	}
 
 	/**
@@ -82,7 +82,7 @@ class ReturTransaksi extends CActiveRecord
 			'jumlah' => 'Jumlah',
 			'status' => 'Status',
 			'petugas_id' => 'Petugas',
-		);
+			);
 	}
 
 	/**
@@ -108,12 +108,14 @@ class ReturTransaksi extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-		));
+			));
 	}
 
 	public function status($data){
 		if($data==1){
 			return "Verifikasi";
+		}else if($data==1){
+			return "Sudah di Kembalikan ke Supplier";
 		}else{
 			return "Belum di Verifikasi";
 		}

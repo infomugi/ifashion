@@ -11,6 +11,13 @@ $detailtransaksi=new CActiveDataProvider('DetailTransaksi', array(
 		)
 	));
 
+$detailretur=new CActiveDataProvider('returTransaksi', array(
+	'criteria'=>array(
+		'condition'=>'kode_barang = "'.$model->id_barang.'"',
+		'order'=>'tanggal DESC'
+		)
+	));
+
 $this->menu=array(
 	array('label'=>'Tambah Barang','url'=>array('create'),'visible'=>Yii::app()->user->record->level==1),
 	array('label'=>'Ubah Barang','url'=>array('update','id'=>$model->id_barang),'visible'=>Yii::app()->user->record->level==1),
@@ -19,7 +26,7 @@ $this->menu=array(
 	);
 	?>
 
-	<h3>Detail Barang #<?php echo $model->nama_barang; ?></h3>
+	<h1>Detail Barang #<?php echo $model->nama_barang; ?></h1>
 
 	<div class="row-fluid">
 		<div class="span4">
@@ -34,6 +41,7 @@ $this->menu=array(
 					'kode_barang',
 					'nama_barang',
 					'stok',
+					'stok_retur',
 					'stok_minimum',
 					'harga_beli',
 					'harga',
@@ -50,7 +58,9 @@ $this->menu=array(
 			</div>
 
 			<?php if(Yii::app()->user->record->level==1): ?>
-				<h3>Data Transaksi Barang #<?php echo $model->kode_barang; ?></h3><hr/>
+
+				<h1>Data Transaksi Barang #<?php echo $model->kode_barang; ?></h1>
+				
 				<?php $this->widget('zii.widgets.grid.CGridView', array(
 					'id'=>'detail-transaksi-grid',
 					'dataProvider'=>$detailtransaksi,
@@ -64,7 +74,6 @@ $this->menu=array(
 								'style' => 'text-align: center;')),
 
 						'tanggal',
-						'kode_barang',
 
 						array(
 							'header'=>'Nama Barang',
@@ -90,4 +99,46 @@ $this->menu=array(
 						),
 						)); ?>
 
-					<?php endif; ?>
+
+						<h1>Data Retur Barang #<?php echo $model->kode_barang; ?></h1>
+
+						<?php $this->widget('zii.widgets.grid.CGridView', array(
+							'id'=>'detail-transaksi-grid',
+							'dataProvider'=>$detailretur,
+							'itemsCssClass' => 'table-responsive table table-striped table-hover table-vcenter',
+							'columns'=>array(
+
+								array(
+									'header'=>'No',
+									'value'=>'$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+									'htmlOptions'=>array('width'=>'10px', 
+										'style' => 'text-align: center;')),
+
+								'tanggal',
+
+								array(
+									'header'=>'Nama Barang',
+									'value'=>'$data->Barang->nama_barang',
+									),
+
+								array(
+									'header'=>'Sisa Stok',
+									'value'=>'$data->Barang->stok',
+									),
+
+								'jumlah',
+								array(
+									'class'=>'CButtonColumn',
+									'template'=>'{view}',
+									'buttons'=>array(
+										'view'=>
+										array(
+											'url'=>'Yii::app()->createUrl("returTransaksi/view", array("id"=>$data->id_retur_transaksi))',
+											),
+										),
+									),
+								),
+								)); ?>
+
+
+							<?php endif; ?>

@@ -53,10 +53,11 @@
 									'activeCssClass'=> 'active',
 									'items'=>array(
 										array('label'=>'Beranda', 'url'=>array('/site/index')),
+										array('label'=>'Penjualan', 'url'=>array('/transaksi/out'), 'visible'=>!Yii::app()->user->isGuest),
+										array('label'=>'Pelanggan', 'url'=>array('/pelanggan/admin'), 'visible'=>!Yii::app()->user->isGuest),
 										array('label'=>'Laporan', 'url'=>array('/site/report'), 'visible'=>!Yii::app()->user->isGuest),
 										array('label'=>'Profile', 'url'=>array('/petugas/view&id='.YII::app()->user->id), 'visible'=>!Yii::app()->user->isGuest),
 										array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-										array('label'=>'Bantuan', 'url'=>array('/site/help')),
 										array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 										),
 									)); 
@@ -72,24 +73,42 @@
 			<div class="cont">
 				<div class="container-fluid">
 
-					<BR>
-						<BR>
+					<?php echo $content ?>
 
-							<?php echo $content ?>
-
-						</div><!--/.fluid-container-->
-					</div>
+				</div><!--/.fluid-container-->
+			</div>
 
 
 
-					<?php
-					Yii::app()->clientscript
+			<?php
+			Yii::app()->clientscript
 		// use it when you need it!
-					->registerCoreScript( 'jquery' )
-					->registerScriptFile( Yii::app()->theme->baseUrl . '/js/bootstrap.js', CClientScript::POS_END )
-					?>
+			->registerCoreScript( 'jquery' )
+			->registerScriptFile( Yii::app()->theme->baseUrl . '/js/bootstrap.js', CClientScript::POS_END )
+			?>
+
+			<script type="text/javascript">
+
+				$(document).on('keyup', '#bayar', function(){
+					bayar();
+				});
+				
+				function bayar()
+				{
+					var Cash = $('#bayar').val();
+					var TotalBayar = $('#total').val();
+
+					if(parseInt(Cash) >= parseInt(TotalBayar)){
+						var Selisih = parseInt(Cash) - parseInt(TotalBayar);
+						$('#kembali').text(parseInt(Selisih));
+					} else {
+						$('#kembali').val('');
+					}
+				}	
+			</script>
 
 
-				</body>
 
-				</html>
+		</body>
+
+		</html>

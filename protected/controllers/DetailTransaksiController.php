@@ -33,7 +33,7 @@ class DetailTransaksiController extends Controller
 				'expression'=>'Yii::app()->user->record->level==1',
 				),
 			array('allow',
-				'actions'=>array('view','index'),
+				'actions'=>array('create','update','view','delete','admin','index','addin','addout','addretur'),
 				'users'=>array('@'),
 				'expression'=>'Yii::app()->user->record->level==3',
 				),			
@@ -167,7 +167,7 @@ class DetailTransaksiController extends Controller
 				if($model->save());
 
 				$update=$this->loadBarang($model->kode_barang);
-				$update->stok += $model->jumlah;
+				$update->stok_retur += $model->jumlah;
 				$update->update();
 
 				$this->redirect(array('transaksi/viewretur','id'=>$id));

@@ -27,15 +27,17 @@ class PelangganController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('view'),
+			array('allow',
+				'actions'=>array('create','update','view','delete','admin','index'),
 				'users'=>array('@'),
+				'expression'=>'Yii::app()->user->record->level==1',
 				),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','index'),
-				'users'=>array('admin'),
-				),
-			array('deny',  // deny all users
+			array('allow',
+				'actions'=>array('create','update','view','delete','admin','index'),
+				'users'=>array('@'),
+				'expression'=>'Yii::app()->user->record->level==3',
+				),			
+			array('deny',
 				'users'=>array('*'),
 				),
 			);
@@ -109,11 +111,23 @@ class PelangganController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$data=$this->loadModel($id);
+
+		if($data->id_pelanggan==1){
+
+			throw new CHttpException(404,'Data Pelanggan Non Member Ini tidak Dapat Dihapus.');
+
+		}else{
+
+			$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+
+		}
+
+
 	}
 
 	/**
