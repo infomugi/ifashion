@@ -143,7 +143,19 @@
 					'filter'=> CHtml::activeTextField($model2, 'stok'),
 					'htmlOptions'=>array('width'=>'100px', 
 						'style' => 'text-align: left;'),         
-					),                 
+					),    
+
+				array(
+					'name'=>'warna',
+					'filter'=> CHtml::activeTextField($model2, 'warna'),
+					'value'=>'$data->Warnas->nama',
+					),	
+
+				array(
+					'name'=>'ukuran',
+					'filter'=> CHtml::activeTextField($model2, 'ukuran'),
+					'value'=>'$data->Ukurans->nama',
+					),	             
 
 				array(
 					'header'=>'PILIH',

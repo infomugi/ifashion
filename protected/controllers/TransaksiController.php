@@ -167,6 +167,11 @@ class TransaksiController extends Controller
 		$model=new Transaksi;
 		$model->setScenario('penjualan');
 
+		$pelanggan=new Pelanggan('search');
+		$pelanggan->unsetAttributes();  // clear any default values
+		if(isset($_GET['Pelanggan']))
+			$pelanggan->attributes=$_GET['Pelanggan'];		
+
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -185,6 +190,7 @@ class TransaksiController extends Controller
 
 		$this->render('out_barang',array(
 			'model'=>$model,
+			'pelanggan'=>$pelanggan,
 			));
 	}
 

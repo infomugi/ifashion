@@ -65,7 +65,7 @@ return array(
 		*/
 
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=eternity',
+			'connectionString' => 'mysql:host=localhost;dbname=i_fashion',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',

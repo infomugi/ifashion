@@ -15,4 +15,4 @@ $this->menu=array(
 
 	<h3 class="alert alert-success">Penjualan</h3>
 
-	<?php echo $this->renderPartial('_form_out', array('model'=>$model)); ?>
+	<?php echo $this->renderPartial('_form_out', array('model'=>$model,'pelanggan'=>$pelanggan)); ?>

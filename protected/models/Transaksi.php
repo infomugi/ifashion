@@ -81,6 +81,10 @@ class Transaksi extends CActiveRecord
 			'status' => 'Status',
 			'supplier_id' => 'Supplier',
 			'pelanggan_id' => 'Pelanggan',
+			'nama' => 'Nama',
+			'alamat' => 'Alamat',
+			'kontak' => 'Kontak',
+			'email' => 'Email',
 			);
 	}
 

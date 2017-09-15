@@ -45,9 +45,19 @@ $this->menu=array(
 					'stok_minimum',
 					'harga_beli',
 					'harga',
-					'warna',
-					'ukuran',
+
+					array(
+						'name'=>'warna',
+						'value'=>$model->Warnas->nama,
+						),	
+
+					array(
+						'name'=>'ukuran',
+						'value'=>$model->Ukurans->nama,
+						),	
+
 					'keterangan_produk',
+
 					array(
 						'name'=>'kategori',
 						'value'=>$model->Kategori->nama_kategori,

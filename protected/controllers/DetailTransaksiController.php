@@ -79,6 +79,8 @@ class DetailTransaksiController extends Controller
 
 			if($model->jumlah=='' && $model->kode_barang==''){
 				echo '<script>alert("Data Harus diisi");window.location="index.php?r=detailtransaksi/addout&id='.$id.'"</script>';
+			}elseif($model->jumlah==0){
+				echo '<script>alert("QTY Tidak Boleh 0 ( Nol )");window.location="index.php?r=detailtransaksi/addout&id='.$id.'"</script>';
 			}else{
 				$model->save();
 
@@ -121,6 +123,8 @@ class DetailTransaksiController extends Controller
 			}
 			elseif($model->jumlah=='' && $model->kode_barang==''){
 				echo '<script>alert("Data Harus diisi");window.location="index.php?r=detailtransaksi/addout&id='.$id.'"</script>';
+			}elseif($model->jumlah==0){
+				echo '<script>alert("QTY Tidak Boleh 0 ( Nol )");window.location="index.php?r=detailtransaksi/addout&id='.$id.'"</script>';
 			}else{
 				if($model->save());
 
@@ -163,6 +167,8 @@ class DetailTransaksiController extends Controller
 			}
 			elseif($model->jumlah=='' && $model->kode_barang==''){
 				echo '<script>alert("Data Harus diisi");window.location="index.php?r=detailtransaksi/addout&id='.$id.'"</script>';
+			}elseif($model->jumlah==0){
+				echo '<script>alert("QTY Tidak Boleh 0 ( Nol )");window.location="index.php?r=detailtransaksi/addout&id='.$id.'"</script>';
 			}else{
 				if($model->save());
 

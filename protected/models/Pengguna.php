@@ -47,7 +47,7 @@ class Pengguna extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('idPengguna, nama_lengkap, username, password, email, level, status', 'safe', 'on'=>'search'),
-		);
+			);
 	}
 
 	/**
@@ -58,7 +58,7 @@ class Pengguna extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-		);
+			);
 	}
 
 	/**
@@ -67,14 +67,14 @@ class Pengguna extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'idPengguna' => 'Id Pengguna',
+			'idPengguna' => 'Kode Pengguna',
 			'nama_lengkap' => 'Nama Lengkap',
 			'username' => 'Username',
 			'password' => 'Password',
 			'email' => 'Email',
 			'level' => 'Level',
 			'status' => 'Status',
-		);
+			);
 	}
 
 	/**
@@ -98,6 +98,6 @@ class Pengguna extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-		));
+			));
 	}
 }

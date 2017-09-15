@@ -61,6 +61,8 @@ class Barang extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'Kategori' => array(self::BELONGS_TO, 'Kategori', 'kategori'),
+			'Warnas' => array(self::BELONGS_TO, 'Warna', 'warna'),
+			'Ukurans' => array(self::BELONGS_TO, 'Ukuran', 'ukuran'),
 			);
 	}
 
@@ -70,7 +72,7 @@ class Barang extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_barang' => 'Id Barang',
+			'id_barang' => 'Kode Barang',
 			'kode_barang' => 'Kode Barang',
 			'nama_barang' => 'Nama Barang',
 			'kategori' => 'Kategori',
